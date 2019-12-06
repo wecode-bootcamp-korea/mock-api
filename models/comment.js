@@ -1,7 +1,7 @@
 const Model = require('utils/Model')
 
 module.exports = new Model('comment', {
-  user: null,
+  username: '',
   content: '제목없음',
   likes: 0,
 })

@@ -21,7 +21,7 @@ http://127.0.0.1:3000
 | put    | /post/{id} | 해당 ID에 해당하는 항목을 수정합니다. |
 | delete | /post/{id} | 해당 ID에 해당하는 항목을 삭제합니다. |
 
-## 목록조회
+## 목록조회 ( [get] /post )시 queryString
 
 | key     | type       | description              |
 |---------|------------|--------------------------|
@@ -29,7 +29,7 @@ http://127.0.0.1:3000
 | page    | 양의 정수  | 페이지 번호              |
 | reverse | true/false | 역순으로 할지 여부       |
 
-## 항목 생성
+## 항목 생성 ( [post] /post )시 json
 
 | key     | defaultValue |
 |---------|--------------|

@@ -1,5 +1,4 @@
 const post = require('models/post')
-
 const validator = require('express-validator')
 
 const validationError = (req, res, next) => {
@@ -84,9 +83,9 @@ const OnePost = async (req, res, next) => {
 module.exports = {
   create: createPost,
   update: updatePost,
-  delete: deletePost,
-  list: listPost,
-  one: OnePost,
+  remove: deletePost,
+  getList: listPost,
+  getOne: OnePost,
   
   checkID,
   checkList,

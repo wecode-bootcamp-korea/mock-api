@@ -22,6 +22,17 @@ class Model {
     this.fields = fields
   }
 
+  checkNotFound (flag) {
+    return new Promise((resolve, reject) => {
+      if (flag) return resolve(flag)
+      reject({
+        hasHandled: true,
+        status: 404,
+        message: 'Entity Not Found',
+      })
+    })
+  }
+
   readJSON () {
     return json.load(this.name)
       .catch(() => (
@@ -41,7 +52,9 @@ class Model {
   async findOne (id) {
     try {
       const src = await this.readJSON()
-      return src.filter(e => e.id === id)[0]
+      const result = src.filter(e => e.id === id)
+      await this.checkNotFound(result.length)
+      return result[0]
     } catch (err) {
       throw err
     }
@@ -125,12 +138,11 @@ class Model {
           ...this.createEntityData(data, entity),
         };
       })
-
+      await this.checkNotFound(count)
       await json.save(
         this.name,
         nextEntities,
       )
-      
       return count
     } catch (err) {
       throw err
@@ -148,6 +160,7 @@ class Model {
           return ret
         }
       )
+      await this.checkNotFound(count)
       await json.save(
         this.name,
         nextEntities,

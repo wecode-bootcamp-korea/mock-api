@@ -9,7 +9,7 @@ npm i
 npm start
 ```
 - 서버시작 후 접속방법
-http://127.0.0.1:3000
+http://127.0.0.1:8000
 
 ## endpoints
 

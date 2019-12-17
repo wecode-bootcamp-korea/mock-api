@@ -1,14 +1,15 @@
 const post = require('models/post')
 const validator = require('express-validator')
+const responses = require('../responses')
 
 const validationError = (req, res, next) => {
   const errors = validator.validationResult(req);
   if (errors.isEmpty()) return next()
-  return res.status(422).json({
-    status: false,
-    message: '요청 형식이 잘못되었습니다.',
-    errors: errors.array()
-  });
+  responses.handledError(res)({
+    status: 422,
+    message: 'Wrong Request Format',
+    data: errors.array(),
+  })
 }
 
 const checkID = [
@@ -26,7 +27,10 @@ const checkList = [
 const createPost = async (req, res, next) => {
   try {
     const data = await post.create(req.body)
-    res.json({ data })
+    responses.success(res)({
+      message: 'Entity Has Created',
+      data,
+    })
   } catch (err) {
     next(err)
   }
@@ -35,7 +39,10 @@ const createPost = async (req, res, next) => {
 const updatePost = async (req, res, next) => {
   try {
     const data = await post.update(req.params.id, req.body)
-    res.json({ data })
+    responses.success(res)({
+      message: 'Entity Has Updated',
+      data,
+    })
   } catch (err) {
     next(err)
   }
@@ -44,7 +51,10 @@ const updatePost = async (req, res, next) => {
 const deletePost = async (req, res, next) => {
   try {
     const data = await post.remove(req.params.id)
-    res.json({ data })
+    responses.success(res)({
+      message: 'Entity Has Deleted',
+      data,
+    })
   } catch (err) {
     next(err)
   }
@@ -64,7 +74,9 @@ const listPost = async (req, res, next) => {
       reverse,
     })
 
-    res.json({ data })
+    responses.success(res)({
+      data,
+    })
     
   } catch (err) {
     next(err)
@@ -74,7 +86,9 @@ const listPost = async (req, res, next) => {
 const OnePost = async (req, res, next) => {
   try {
     const data = await post.findOne(req.params.id)
-    res.json({ data })
+    responses.success(res)({
+      data,
+    })
   } catch (err) {
     next(err)
   }
